@@ -12,16 +12,17 @@ const products = [
   {
     title: "Limoncello",
     price: 20,
-    imageFile: "product-limoncello.png",
+    imageFile: "limoncello.jfif",
   },
   {
     title: "Single Malt Whisky Yamakazi",
     price: 105,
-    imageFile: "whisky-yamazaki.jpg"
+    imageFile: "whisky.jfif"
   },
   {
     title: "Tequila Don Julio",
     price: 35,
+    imageFile: "tequila.jfif"
   },
   {
     title: "Lambrusco",
