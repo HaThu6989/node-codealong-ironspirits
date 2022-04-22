@@ -1,5 +1,7 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const mongoose = require('mongoose');
+const Product = require('./models/Product.model');
+const app = express();
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
@@ -7,61 +9,61 @@ app.set("view engine", "hbs");
 app.use(express.static('public'));
 
 
+/*Connect to MongoDB*/
+mongoose
+  .connect('mongodb://localhost/ironborn-ecommerce')
+  .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
+  .catch(err => console.error('Error connecting to mongo', err));
 
-/* Routes  */
 
+/*Routes*/
 app.get("/", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/home.html');
-  res.render('home');
-})
-
+  res.render("home");
+});
 
 app.get("/about", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/about.html');
-  res.render('about');
-})
+  res.render("about");
+});
 
 app.get("/contact", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/contact.html');
-  res.render('contact');
-})
+  res.render("contact");
+});
+
 
 app.get("/limoncello", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/product-limoncello.html');
-  // res.render("view", info)
-  const data = {
-    title: "Limoncello",
-    price: 20,
-    imageFile: "limoncello.jfif",
-    stores: ["Online", "Albacete", "Freiburg", "Amsterdam"]
-  }
-  res.render("product", data); //product = name file products.hbs
+  Product.findOne({ title: 'Limoncello' })
+    .then(productDetails => {
+      res.render("product", productDetails);
+    })
+    .catch();;
 });
 
 
 app.get("/whisky", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/product-whisky.html');
-  const data = {
-    title: "Single Malt Whisky Yamakazi",
-    price: 105,
-    imageFile: "whisky.jfif"
-  }
-  res.render("product", data);
-
+  Product.findOne({ title: 'Single Malt Whisky Yamakazi' })
+    .then(productDetails => {
+      res.render("product", productDetails);
+    })
+    .catch();;
 });
 
 
 app.get("/tequila", (req, res, next) => {
-  // res.sendFile(__dirname + '/views/product-tequila.html');
-  const data = {
-    title: "Tequila Don Julio",
-    price: 35,
-    // imageFile: "tequila.jfif"
-  }
-  res.render("product", data);
+  Product.findOne({ title: 'Tequila Don Julio' })
+    .then(productDetails => {
+      res.render("product", productDetails);
+    })
+    .catch();;
 });
+
+
+
+
+
 
 
 app.listen(3001, () => {
-  console.log("server listening to requests ...c");
+  console.log("server listening to requests...")
 });
+
+
